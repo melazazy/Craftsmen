@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+
+{% block title %} {{ session.user_id }} Requests {% endblock %}
+
+{% block main %}
+<!-- genrate craftman requestes -->
+<div class="profile-container mcontainer">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th> Offer-id </th>
+                <th> service Name </th>
+                <th> user Name </th>
+                <th> Activety </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in pdata %}
+            <tr>
+                <th> {{ d["serv_id"] }} </th>
+                <td> {{ d["service"] }} </td>
+                <td> {{ d["name"] }} </td>
+
+                {%if d["status"]==0%}
+                <td class="text-info"> Pending.. </td>
+                {%else%}
+                <td class="text-danger"> APPROVED</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+{% endblock %}

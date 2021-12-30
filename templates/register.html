@@ -1,0 +1,79 @@
+{% extends 'layout.html' %}
+
+
+{% block title %} Register {% endblock %}
+
+{% block main %}
+<div class="reg-container mcontainer">
+    <div class="reg-tab-btns">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="craft-tab" data-bs-toggle="pill" data-bs-target="#pills-craft"
+                    type="button" role="tab" aria-controls="pills-craft" aria-selected="true">As Craftsman</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="clint-tab" data-bs-toggle="pill" data-bs-target="#pills-client"
+                    type="button" role="tab" aria-controls="pills-client" aria-selected="false"> As Client </button>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="tab-content" id="pills-tabContent">
+        <!-- Craftsman -->
+        <div class="tab-pane fade show active" id="pills-craft" role="tabpanel" aria-labelledby="craft-tab">
+            <form class="validation" action="/register" method="post">
+                <div class="form-group">
+                    <input autocomplete="off" autofocus class="form-control" name="name" placeholder="Your Name"
+                        required type="text">
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off" autofocus class="form-control" name="mail" placeholder="Your E-mail"
+                        type="email">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" name="password" placeholder="Password" type="password" required>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" name="confirmation" placeholder="Password (again)" type="password"
+                        required>
+                </div>
+                <div class="form-group">
+                    <select id="service" class="form-control" required>
+                        <option selected disabled value="">Select Your service...</option>
+                        {% for service in services %}
+                        <option value="{{ Service }}">{{ service }}</option>
+                        {% endfor%}
+                    </select>
+                </div>
+                <input name="craft" class="btn btn-primary" type="submit" value="Register"></input>
+                <button class="btn btn-secondary" type="reset">Clear</button>
+            </form>
+        </div>
+
+        <!-- clients -->
+        <div class="tab-pane fade" id="pills-client" role="tabpanel" aria-labelledby="clint-tab">
+            <form action="/register" method="post">
+                <form class="validation" action="/register" method="post">
+                    <div class="form-group">
+                        <input autocomplete="off" autofocus class="form-control" name="name" placeholder="Your Name"
+                            type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <input autocomplete="off" autofocus class="form-control" name="mail" placeholder="Your E-mail"
+                            type="email" required>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="password" placeholder="Password" type="password" required>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="confirmation" placeholder="Password (again)" type="password"
+                            required>
+                    </div>
+                    <button id="client" class="btn btn-primary" type="submit">Register</button>
+                    <button class="btn btn-secondary" type="reset">Clear</button>
+                </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

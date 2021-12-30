@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+
+{% block title %}
+{% if "R" in session.user_id %}
+Craftsman
+{% elif "L" in session.user_id %}
+Client
+{% else %}
+Index
+{%endif%}
+| Home
+{% endblock %}
+
+
+{% block main %}
+<div class="index-container mcontainer">
+    <input name="user" type="hidden" value="">{{user}}
+    <div class="main_text left">
+        <p>The craftsmen site provides communication between craftsmen and service seekers</p>
+
+    </div>
+    <div class="main_img right">
+    </div>
+</div>
+
+
+{% endblock %}

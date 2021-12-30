@@ -1,0 +1,238 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: rgb(18 34 78);
+    color: rgb(247 241 241);
+}
+.navbar{
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+.navbar-light .navbar-nav .nav-link {
+    font-weight: bolder;
+    color: #4000fd;
+    font-size: 19px;
+}
+/* .container{
+    margin-top: 8%;
+} */
+/* .mcontainer{
+    margin-top: 8%;
+} */
+.index-container{
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;  
+}
+.reg-container{
+    width: auto;
+    /* color: white; */
+    
+}
+.profile-container{
+    background: white;
+}
+/* cs50 code */
+
+nav .navbar-brand
+{
+    /* size for brand */
+    font-size: xx-large;
+}
+
+/* Colors for brand */
+nav .navbar-brand .blue
+{
+    color: #0703f5;
+}
+nav .navbar-brand .red
+{
+    color: #ff0000f6;
+}
+nav .navbar-brand .yellow
+{
+    color: #f5b82e;
+}
+nav .navbar-brand .green
+{
+    color: #2e944b;
+}
+a .nav-link {
+    font-weight: bold;
+    color: #4000fd;
+    font-size: 15px;
+}
+
+.p-5{
+    margin-top: 60px;
+}
+
+.main_text{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 30px;
+    font-weight: bold;
+    width: 65%;
+}
+
+.main_img{
+    background: url("../client.jpg");
+    background-size:contain;
+    background-repeat: no-repeat;
+    min-height: 50vh;
+    width: 30%;
+}
+.fixed-bottom{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    margin-left: auto;
+    font-size: 20px;
+    color: rgb(221, 219, 219);
+}
+.table{
+    text-align: center;
+}
+.table .link{
+    cursor: pointer;
+}
+
+.form-check-inline {
+    padding-bottom: 20px;
+}
+.form-check-inline label{
+    color: black;
+}
+.validation{
+    padding: 15px;
+    text-align: center;
+}
+
+.search_tb{
+    display: none;
+}
+.show_table{
+    display: block;
+}
+
+/* Sortable tables */
+table.sortable thead {
+    cursor: pointer;
+}
+
+.modal-body{
+    display: flex;
+}
+.modal-dialog{
+    max-width: none;
+}
+/*/////////////////////////////////?????? media */
+/* media queary Code  */
+/* small */
+@media (min-width: 768px)
+{
+    .container{
+        width: 750px;
+    }
+
+     
+}
+
+/* mediem */
+@media (min-width: 992px)
+{
+    .container{
+        width: 970px;
+    }
+    
+}
+/* larg */
+@media (min-width: 1200px)
+{
+    .container{
+        width: 1170px;
+    }
+    
+}
+
+
+
+
+@media(max-width:767px)
+{
+    .mcontainer{
+        display: block;
+
+    }
+    .mcontainer .main_text,.main_img{
+       width: 100%;
+    }
+    /* .main_text{
+        width: 100%;
+    } */
+}
+.tooltip{
+    font-size: 20px;
+}
+
+
+
+
+
+/* Start Contact Form Style */
+
+.contact-form{
+    background: #fff;
+    margin-top: 10%;
+    margin-bottom: 5%;
+    width: 70%;
+}
+.contact-form .form-control{
+    border-radius:1rem;
+}
+.contact-image{
+    text-align: center;
+}
+.contact-image img{
+    border-radius: 6rem;
+    width: 11%;
+    margin-top: -3%;
+    transform: rotate(29deg);
+}
+.contact-form form{
+    padding: 14%;
+}
+.contact-form form .row{
+    margin-bottom: -7%;
+}
+.contact-form h3{
+    margin-bottom: 8%;
+    margin-top: -10%;
+    text-align: center;
+    color: #0062cc;
+}
+.contact-form .btnContact {
+    width: 50%;
+    border: none;
+    border-radius: 1rem;
+    padding: 1.5%;
+    background: #dc3545;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+}
+.btnContactSubmit
+{
+    width: 50%;
+    border-radius: 1rem;
+    padding: 1.5%;
+    color: #fff;
+    background-color: #0062cc;
+    border: none;
+    cursor: pointer;
+}
+
+/* End Contact Form Style */

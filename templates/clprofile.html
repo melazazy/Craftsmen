@@ -1,0 +1,189 @@
+{% extends 'layout.html' %}
+
+
+{% block title %} Client Profile {% endblock %}
+
+{% block main %}
+<!-- two tabs div -->
+<div class="reg-tab-btns">
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="craft-tab" data-bs-toggle="pill" data-bs-target="#pills-craft"
+                type="button" role="tab" aria-controls="pills-craft" aria-selected="true">My Requests</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="clint-tab" data-bs-toggle="pill" data-bs-target="#pills-client" type="button"
+                role="tab" aria-controls="pills-client" aria-selected="false"> Setting</button>
+        </li>
+    </ul>
+</div>
+<!-- end two tabs -->
+<div class="tab-content" id="pills-tabContent">
+    <!-- Clients -->
+    <div class="tab-pane fade show active" id="pills-craft" role="tabpanel" aria-labelledby="craft-tab">
+        <div class="profile-container mcontainer">
+            <form action="/profile" method="post">
+                <button name="client" class="btn btn-primary" type="submit">Add Request</button>
+            </form>
+            <table class="table sortable table-striped">
+                <thead>
+                    <tr>
+                        <th> Request-id </th>
+                        <th> service </th>
+                        <th> place </th>
+                        <th> Price </th>
+                        <th> Total Accepted </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for x in rows %}
+                    <tr>
+                        <th> {{ x["request_id"] }} </th>
+                        <td> {{ x["service"] }} </td>
+                        <td> {{ x["country"]}},{{ x["state"]}},{{x["city"] }} </td>
+                        <td> {{ x["price"] }} </td>
+                        <th>
+                            <a class="link" data-bs-toggle="modal" data-bs-target="#total{{ x['request_id'] }}">{{
+                                x["total"] }}</a>
+                        </th>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+            <form action="/profile" method="post" class="d-md-flex justify-content-md-end">
+                <button name="client" class="btn btn-primary" type="submit">Add Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Setting -->
+    <div class="tab-pane fade" id="pills-client" role="tabpanel" aria-labelledby="clint-tab">
+        <div class="profile-container mcontainer">
+            <div class="modal-content">
+                <form action="/editpro" method="post">
+                    <!-- modal body table for testing -->
+                    <div class="modal-body">
+                        <!-- left Table -->
+                        <div class="table">
+                            <div class="card mb-6" style=" margin: 0;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6 class="mb-0">ID</h6>
+                                        </div>
+                                        <div name="offid2" class="col-sm-8 text-secondary">
+                                            {{ user[0]['client_id'] }}
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6 class="mb-0">Name</h6>
+                                        </div>
+                                        <input class="col-sm-8 text-secondary" name="name" value="{{user[0]['name']}}">
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6 class="mb-0">E-mail</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-secondary">{{ user[0]["mail"]}}</div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6 class="mb-0">CID</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-primary">
+                                            {{ user[0]["cid"]}}
+                                        </div>
+                                        <input type="hidden" name="cid" value="{{ user[0]['cid']}}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- right table -->
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <!-- <button  type="button" class="btn btn-primary">Save changes</button> -->
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Start Total Acceptes Click Modal -->
+{% for x in rows %}
+<div class="modal fade" id="total{{ x['request_id'] }}" tabindex="-1" aria-labelledby="clientModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <!-- form action="/add_service" method="post" -->
+            <form action="/pendacc" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger" id="clientModalLabel"> Accept Details
+                        <span class="fs-2 text-primary ">{{x['service']}}</span>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;
+                    </button>
+                </div>
+                <!-- modal body table for testing -->
+                <div class="modal-body">
+                    <table class="table sortable table-striped">
+                        <thead>
+                            <tr>
+                                <th> Service_Id </th>
+                                <th> Client Name </th>
+                                <th>E-Mail</th>
+                                <th> service </th>
+                                <th> Actions </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {% for r in list%}
+                            {% if r['service']== x['service'] %}
+                            <tr>
+                                <th> {{r["id"] }}</th>
+                                <input type="hidden" name="id" value="{{r['id'] }}">
+                                <th> {{ r['name'] }} </th>
+                                <input type="hidden" name="name" value="{{ r['name'] }}">
+                                <th> {{ r['mail'] }} </th>
+                                <td> {{ r["service"] }} </td>
+                                {%if r['status'] ==0%}
+                                <td>
+                                    <button name="action" class="btn btn-danger" type="submit"
+                                        value="reject">Reject</button>
+                                    <button name="action" class="btn btn-info" type="submit"
+                                        value="approve">Approve</button>
+                                </td>
+                                {%else%}
+                                <td>APPROVED</td>
+                                {%endif%}
+
+                            </tr>
+                            {%endif%}
+                            {% endfor %}
+
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <!-- clients can NOT Accept Requestes -->
+                    <!-- <button type="submit" class="btn btn-primary"> Submit Edit</button> -->
+                </div>
+                <!-- end -->
+            </form>
+        </div>
+    </div>
+</div>
+{% endfor %}
+<!-- End Total Requests Click Modal -->
+{% endblock %}

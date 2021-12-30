@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+    <!-- Boostrap-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <!-- http://getbootstrap.com/ -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+    <!-- https://favicon.io/emoji-favicons/money-mouth-face/ -->
+    <link href="/static/icon.ico" rel="icon">
+    <link href="/static/style/normalize.css" rel="stylesheet">
+    <link href="/static/style/all.min.css" rel="stylesheet">
+
+    <!-- google font  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300;0,400;0,700;1,100;1,500&display=swap"
+        rel="stylesheet">
+
+    <link href="/static/style/style.css" rel="stylesheet">
+    <script src="../static/JS/sort.js"></script>
+    <title> {% block title %}{% endblock %}</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-light bg-light border">
+        <a class="navbar-brand" href="/"><span class="blue">C</span><span class="red">rafts</span><span
+                class="blue">M</span><span class="red">en</span></a>
+        <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+            data-target="#navbar" data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar">
+            {% if session.user_id %}
+            <ul class="navbar-nav mr-auto mt-2">
+                <!-- <span><iclass="fas fa-angle-left change-background fa-2x"></i></span> -->
+                <li class="nav-item"><a class="nav-link" href="/profile">Profile</a></li>
+                {% if "R" in session.user_id %}
+                <li class="nav-item"><a class="nav-link" href="/requests">Requests</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="/services">Services</a></li>
+                {%endif%}
+                <li class="nav-item"><a class="nav-link" href="/search">Search</a></li>
+                <!-- <li class="nav-item"><a class="nav-link" href="/history">History</a></li> -->
+            </ul>
+            <ul class="navbar-nav ml-auto mt-2">
+                <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+            </ul>
+            {% else %}
+            <ul class="navbar-nav ml-auto mt-2">
+                <!-- <i class="fab fa-searchengin"></i> -->
+                <li class="nav-item"><a class="nav-link" href="/register">Register</i></a>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+
+                <li class="nav-item"><a class="nav-link text-danger" href="/guest">As Guest</a></li>
+            </ul>
+            {% endif %}
+        </div>
+    </nav>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %} {% if category ==
+    'error' %}
+    <div class="alert alert-danger alter-dismissable fade show " role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alter-dismissable fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %} {% endfor %} {% endif %} {% endwith %}
+
+    <div class="container p-5">
+        {% block main %}{% endblock %}
+    </div>
+
+    <footer class="fixed-bottom small text-center">
+        <p>
+            All Copyright Recerved &copy; <a href="/">Craftsmen</a> || <a class="text-danger" href="/contact"> Contact
+                Us</a>
+        </p>
+    </footer>
+
+    <script src="../static/JS/bootstrap.bundle.min.js"></script>
+    <script src="../static/JS/bootstrap.js"></script>
+    <script src="../static/JS/bootstrap.js.map"></script>
+    <script src="../static/JS/script.js"></script>
+
+
+</body>
+
+</html>

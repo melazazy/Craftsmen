@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+
+
+{% block title %} Login {% endblock %}
+
+{% block main %}
+<div class="reg-container mcontainer">
+    <div class="reg-tab-btns">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="craft-tab" data-bs-toggle="pill" data-bs-target="#pills-craft"
+                    type="button" role="tab" aria-controls="pills-craft" aria-selected="true">As Craftsman</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="clint-tab" data-bs-toggle="pill" data-bs-target="#pills-client"
+                    type="button" role="tab" aria-controls="pills-client" aria-selected="false"> As Client </button>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="tab-content" id="pills-tabContent">
+        <!-- Craftsman -->
+        <div class="tab-pane fade show active" id="pills-craft" role="tabpanel" aria-labelledby="craft-tab">
+            <form action="/login" method="post">
+
+                <div class="form-group">
+                    <input autocomplete="off" autofocus class="form-control" name="mail" placeholder="Your E-mail"
+                        type="email">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" name="password" placeholder="Password" type="password">
+                </div>
+                <button name="craft" class="btn btn-primary" type="submit">Login</button>
+                <button class="btn btn-secondary" type="reset">Clear</button>
+            </form>
+        </div>
+        <!-- clients -->
+        <div class="tab-pane fade" id="pills-client" role="tabpanel" aria-labelledby="clint-tab">
+
+            <form action="/login" method="post">
+                <div class="form-group">
+                    <input autocomplete="off" autofocus class="form-control" name="mail" placeholder="Your E-mail"
+                        type="email">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" name="password" placeholder="Password" type="password">
+                </div>
+                <button name="client" class="btn btn-primary" type="submit">Login</button>
+                <button class="btn btn-secondary" type="reset">Clear</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

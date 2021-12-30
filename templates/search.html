@@ -1,0 +1,325 @@
+{% extends 'layout.html' %}
+
+
+{% block title %} {% if "R" in session.user_id %} Craftsman {%elif "L" in session.user_id%} Client {%else%}
+Guest{%endif%}
+| Search {% endblock %}
+
+{% block main %}
+<div class="profile-container mcontainer">
+    <!-- Start Forn Block -->
+    <form class="validation" action="/search" method="post">
+        <div class="form-group">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="search-radio" id="services" value="option1">
+                <label class="form-check-label" for="services">services</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="search-radio" id="Requestes" value="option2">
+                <label class="form-check-label" for="Requestes">Requestes</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="search-radio" id="both" value="option3">
+                <label class="form-check-label" for="both">both</label>
+            </div>
+            <div class="form-group">
+                <select name="services" id="service" class="form-control" required>
+                    <option selected disabled value="">Select Your service...</option>
+                    {% for service in services %}
+                    <option value="{{ service }}">{{ service }}</option>
+                    {% endfor%}
+                </select>
+            </div>
+        </div>
+        <button id="search_btn" class="btn btn-primary" type="submit">Search</button>
+        <button class="btn btn-secondary" type="reset">Clear</button>
+    </form>
+    <!-- End Forn Block -->
+    <!-- Start Search Table Block -->
+    <div class="table-responsive fa-scroll">
+        <table class="sortable table table-striped table-hover search_tb {{show}}">
+            <thead>
+                <tr>
+                    <th> ID </th>
+                    <th> Type </th>
+                    <th> Name </th>
+                    <th> Service Name </th>
+                    <th> place </th>
+                    <th> Price </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if serv %}
+                {% for r in serv %}
+                <tr>
+                    <th>
+                        <!-- <form action="/link" method="post"> -->
+                        <a class="link" data-bs-toggle="modal" data-bs-target="#offerModal{{ r['offer_id'] }}">{{
+                            r["offer_id"] }} </a>
+                        <!-- </form> -->
+                    </th>
+                    <th> OFFER </th>
+                    <td> {{ r["name"]}} </td>
+                    <td> {{ r["service"] }} </td>
+                    <td> {{ r["country"]}} , {{r["state"]}} , {{r["city"] }}</td>
+                    <td> {{ r["price"]}}</td>
+                    <!-- <td>
+                        <a class="link" data-bs-toggle="modal" data-bs-target="#servModal">12</a>
+                    </td> -->
+                </tr>
+                {% endfor %}
+                {% endif %}
+                {% if req %}
+                {% for r in req %}
+                <tr>
+                    <th> <a class="link" data-bs-toggle="modal" data-bs-target="#clientModal{{ r['request_id'] }}"> {{
+                            r["request_id"] }}
+                        </a>
+                    </th>
+                    <th> REQUEST </th>
+                    <td> {{ r["name"]}} </td>
+                    <td> {{ r["service"] }} </td>
+                    <td> {{ r["country"]}} , {{r["state"]}} , {{r["city"] }}</td>
+                    <td> {{ r["price"]}}</td>
+
+                </tr>
+                {% endfor %}
+                {% endif %}
+
+            </tbody>
+
+        </table>
+    </div>
+    <!-- End Search Table Block -->
+    {% if serv %}
+    {% for r in serv %}
+    <!-- OfferModal Modal -->
+    <div class="modal fade" id="offerModal{{ r['offer_id'] }}" tabindex="-1" aria-labelledby="offerModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <form action="/reqserv" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-danger" id="clientModalLabel">Service</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;
+                        </button>
+                    </div>
+                    <!-- modal body table for testing -->
+                    <div class="modal-body">
+                        <!-- left Table -->
+                        <div class="table">
+                            <div class="card mb-6" style=" margin: 0;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6 class="mb-0">ID</h6>
+                                        </div>
+                                        <div name="offid2" class="col-sm-8 text-secondary">
+                                            {{ r['offer_id'] }}
+                                        </div>
+                                        <input type="hidden" name="offid" value="{{r['offer_id']}}">
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6 class="mb-0">Name</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-secondary"> {{r['name']}}</div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6 class="mb-0">place</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-secondary">{{ r["country"]}} , {{r["state"]}} ,
+                                            {{r["city"] }}</div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6 class="mb-0">Notes</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-primary">
+                                            <textarea disabled class="form-control" aria-label="With textarea">
+                                            {{ r["notes"]}}
+                                        </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- right table -->
+                        <div class="table">
+                            <div class="card mb-6" style=" margin: 0;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6 class="mb-0">Time From</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-secondary"> {{ r["time_from"]}}</div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6 class="mb-0">Time To</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-secondary"> {{ r["time_to"]}}</div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6 class="mb-0">Price</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-secondary">{{ r["price"]}}</div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6 class="mb-0">Contact</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-primary">
+                                            <textarea disabled class="form-control" aria-label="With textarea">
+                                            {{ r["contact"]}}
+                                        </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        {% if "R" in session.user_id or session.user_id==NOUN %}
+                        <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip"
+                            title="Craftsman Can't Request a Service!!!">
+                            <button disabled type="button" class="btn btn-primary">Request This Service</button>
+                        </span>
+                        {% else %}
+                        <button type="submit" class="btn btn-primary">Request This Service</button>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if req %}
+    {% for r in req %}
+    <!-- idModal -->
+    <div class="modal fade" id="clientModal{{ r['request_id'] }}" tabindex="-1" aria-labelledby="clientModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <form action="/acceptreq" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-danger" id="clientModalLabel">Request</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;
+                        </button>
+                    </div>
+                    <!-- modal body table for testing -->
+                    <div class="modal-body">
+                        <!-- left Table -->
+                        <div class="table">
+                            <div class="card mb-6" style=" margin: 0;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6 class="mb-0">ID</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-secondary">
+                                            {{ r['request_id'] }}
+
+                                        </div>
+                                        <input type="hidden" name="reqid" value="{{ r['request_id'] }}">
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6 class="mb-0">Name</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-secondary"> {{r['name']}}</div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6 class="mb-0">place</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-secondary">{{ r["country"]}} , {{r["state"]}} ,
+                                            {{r["city"] }}</div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6 class="mb-0">Notes</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-primary">
+                                            <textarea disabled class="form-control" aria-label="With textarea">
+                                            {{ r["notes"]}}
+                                        </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- right table -->
+                        <div class="table">
+                            <div class="card mb-6" style=" margin: 0;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6 class="mb-0">Time From</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-secondary"> {{ r["time_from"]}}</div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6 class="mb-0">Time To</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-secondary"> {{ r["time_to"]}}</div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6 class="mb-0">Price</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-secondary">{{ r["price"]}}</div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <h6 class="mb-0">Contact</h6>
+                                        </div>
+                                        <div class="col-sm-8 text-primary">
+                                            <textarea disabled class="form-control" aria-label="With textarea">
+                                            {{ r["contact"]}}
+                                        </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <!-- clients can NOT Accept Requestes -->
+                        {% if "R" in session.user_id %}
+                        <button type="submit" class="btn btn-primary">Accept This Request</button>
+                        {% else %}
+                        <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-daley="100"
+                            title="Client Can't Accept Requests!!!">
+                            <button disabled type="submit" class="btn btn-primary">Accept This Request</button>
+                        </span>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+
+{% endblock %}

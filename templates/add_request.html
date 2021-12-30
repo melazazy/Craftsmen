@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+
+{% block title %} ADD Request {% endblock %}
+
+{% block main %}
+<div class="reg-container mcontainer">
+    <div class="reg-container mcontainer">
+        <form class="validation" action="/add_request" method="post">
+            <div class="form-group">
+                <select name="services" id="service" class="form-control" required>
+                    <option selected disabled value="">Select Your service...</option>
+                    {% for service in services %}
+                    <option value="{{ service }}">{{ service }}</option>
+                    {% endfor%}
+                </select>
+            </div>
+            <div class="form-group">
+                <input autocomplete="off" autofocus class="form-control" name="ftime" placeholder="Time 
+                from" type="datetime-local" required>
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="ttime" placeholder="Time To" type="datetime-local">
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="country" placeholder="Country" type="text">
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="state" placeholder="State" type="text">
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="city" placeholder="City" type="text">
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="price" placeholder="Price/HR" type="number">
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="notes" placeholder="Enter Some Notes" type="text">
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="contact" placeholder="How Craftsman Contact to You..." type="text">
+            </div>
+            <button id="client" class="btn btn-primary" type="submit">Add</button>
+            <button class="btn btn-secondary" type="reset">Clear</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
