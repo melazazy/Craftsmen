@@ -1,6 +1,6 @@
 # Craftsmen Website
 #### Video Demo: 
-	[Demo Video] (https://www.youtube.com/watch?v=261kRLrtWcQ)
+	https://www.youtube.com/watch?v=261kRLrtWcQ
 
 #### Description:
 	The site visitor can register or participate on the site as a visitor,
